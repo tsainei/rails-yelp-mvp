@@ -1,2 +1,18 @@
-<h1>Restaurants#index</h1>
-<p>Find me in app/views/restaurants/index.html.erb</p>
+<p style="color: green"><%= notice %></p>
+
+<h1>Restaurants</h1>
+
+<div id="restaurants">
+  <% @restaurants.each do |restaurant| %>
+    <div class="card my-3">
+      <div class="card-body">
+        <%= render restaurant %>
+        <p>
+          <%= link_to "Show this restaurant", restaurant %>
+        </p>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<%= link_to "New restaurant", new_restaurant_path %>
