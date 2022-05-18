@@ -1,25 +1,49 @@
-<%= render @restaurant %>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+      <h1><%= @restaurant.name %></h1>
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <th scope="row">Address</th>
+            <td><%= @restaurant.address %></td>
+          </tr>
+          <tr>
+            <th scope="row">Phone Number</th>
+            <td><%= @restaurant.phone_number %></td>
+          </tr>
+          <tr>
+            <th scope="row">Category</th>
+            <td><%= @restaurant.category %></td>
+          </tr>
+        </tbody>
+      </table>
 
-<div>
-  <%= link_to "Edit this restaurant", edit_restaurant_path(@restaurant), class: 'btn btn-primary' %> |
-  <%= link_to "Back to restaurants", restaurants_path, class: 'btn btn-link' %> |
-  
-  <%= button_to "Destroy this restaurant", @restaurant, method: :delete, class: 'btn btn-danger btn-sm mt-3', form: { data: { turbo_confirm: 'Are you sure?' } } %>
-</div>
-
-
-<div class="mt-5">
-  <h2>Reviews:</h2>
-
-  <% @restaurant.reviews.each do |review| %>
-    <div class="row">
-      <div class="col">
-        <%= review.content %>
+      <div class="list-group">
+        <% @restaurant.reviews.each do |review| %>
+          <li class="list-group-item">
+            <small>
+              <% count = 0 %>
+              <% 5.times do %>
+                <% if review.rating > count %>
+                  <i class="fas fa-star"></i>
+                <% else %>
+                  <i class="far fa-star"></i>
+                <% end %>
+                <% count += 1 %>
+              <% end %>
+            </small>
+            <p><%= review.content %></p>
+          </li>
+        <% end %>
       </div>
-      <div class="col">
-        <%= button_to "Delete this review", review, method: :delete, class: 'btn btn-danger btn-sm', form: { data: { turbo_confirm: 'Are you sure?' } } %>
-      </div>
+
+      <%= simple_form_for [@restaurant, @review] do |f| %>
+        <%= f.input :rating, collection: 0..5 %>
+        <%= f.input :content%>
+        <%= f.submit class: 'btn btn-primary' %>
+      <% end %>
+      <%= link_to "See all restaurants", restaurants_path %>
     </div>
-    <hr>
-  <% end %>
+  </div>
 </div>

@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   root 'restaurants#index'
 
-  resources :restaurants do
-    resources :reviews, only: %i[create index]
+  resources :restaurants, only: %i[index show new create] do
+    resources :reviews, only: [:create]
   end
 
   resources :reviews, only: %i[destroy]

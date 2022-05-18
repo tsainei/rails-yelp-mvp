@@ -5,6 +5,7 @@ class ReviewsController < ApplicationController
   end
 
   def create
+
     @review = Review.new(review_params)
     @review.restaurant = @restaurant
     if @review.save
@@ -13,7 +14,7 @@ class ReviewsController < ApplicationController
     else
       flash[:error] = 'Something went wrong!'
       Rails.logger.error @review.errors.details
-      render :new, status: :unprocessable_entity
+      render "restaurants/show"
     end
   end
 
